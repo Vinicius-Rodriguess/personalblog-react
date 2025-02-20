@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { AuthContext } from '../../contexts/AuthContext';
-import Tema from '../../models/Tema';
-import { atualizar, buscar, cadastrar } from '../../services/Service';
+import { AuthContext } from '../../../contexts/AuthContext';
+import Tema from '../../../models/Tema';
+import { atualizar, buscar, cadastrar } from '../../../services/Service';
 import { RotatingLines } from 'react-loader-spinner';
 
 function FormTema() {

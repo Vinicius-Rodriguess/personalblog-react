@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useNavigate } from 'react-router-dom';
 import './Cadastro.css';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
