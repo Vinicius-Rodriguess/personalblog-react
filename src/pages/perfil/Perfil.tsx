@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthContext } from '../../contexts/AuthContext';
+import { ToastAlerta } from '../../utils/ToastAlerta';
 
 function Perfil() {
   const navigate = useNavigate();
@@ -11,13 +12,13 @@ function Perfil() {
 
   useEffect(() => {
     if (usuario.token === '') {
-      alert('Você precisa estar logado');
+      ToastAlerta('Você precisa estar logado', 'info');
       navigate('/');
     }
   }, [usuario.token]);
 
   return (
-    <div className="container mx-auto m-4 rounded-2xl overflow-hidden">
+    <div className="container mx-auto m-4 rounded-2xl overflow-hidden shadow-md">
       <img
         className="w-full h-72 object-cover border-b-8 border-white"
         src="https://i.imgur.com/ZZFAmzo.jpg"
@@ -31,8 +32,7 @@ function Perfil() {
       />
 
       <div
-        className="relative mt-[-6rem] h-72 flex flex-col 
-                    bg-sky-500 text-white text-2xl items-center justify-center"
+        className="relative mt-[-6rem] h-72 flex flex-col bg-gray-800 text-white text-2xl items-center justify-center"
       >
         <p>Nome: {usuario.nome} </p>
         <p>Email: {usuario.usuario}</p>

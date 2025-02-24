@@ -5,6 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import Usuario from '../../models/Usuario';
 import { cadastrarUsuario } from '../../services/Service';
 import { RotatingLines } from 'react-loader-spinner';
+import { ToastAlerta } from '../../utils/ToastAlerta';
 
 function Cadastro() {
   const navigate = useNavigate();
@@ -47,14 +48,15 @@ function Cadastro() {
 
       try {
         await cadastrarUsuario('/usuarios/cadastrar', usuario, setUsuario);
-        alert('Usuário Cadastrado com sucesso!');
+        ToastAlerta('Usuário Cadastrado com sucesso!', 'sucesso');
       } catch (error) {
         console.log(error);
-        alert('Erro ao cadastrar o Usuário!');
+        ToastAlerta('Erro ao cadastrar o Usuário!', 'erro');
       }
     } else {
-      alert(
+      ToastAlerta(
         'Dados do usuário estão inconsistentes, Verifique as informações e tente novamente.',
+        'erro',
       );
       setUsuario({ ...usuario, senha: '' });
       setConfirmarSenha('');
@@ -65,24 +67,20 @@ function Cadastro() {
 
   return (
     <>
-      <div
-        className="grid grid-cols-1 lg:grid-cols-2 h-screen 
-            place-items-center font-bold"
-      >
+      <div className="grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold">
         <div className="fundoCadastro hidden lg:block"></div>
         <form
           className="flex justify-center items-center flex-col w-2/3 gap-3"
           onSubmit={cadastrarNovoUsuario}
         >
-          <h2 className="text-slate-900 text-5xl">Cadastrar</h2>
+          <h2 className="text-gray-900 text-5xl">Cadastrar</h2>
           <div className="flex flex-col w-full">
             <label htmlFor="nome">Nome</label>
             <input
               type="text"
               id="nome"
               name="nome"
-              placeholder="Nome"
-              className="border-2 border-slate-700 rounded p-2"
+              className="border-1 border-gray-700 rounded p-2 shadow-md"
               value={usuario.nome}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 atualizarEstado(e)
@@ -95,8 +93,7 @@ function Cadastro() {
               type="text"
               id="usuario"
               name="usuario"
-              placeholder="Usuario"
-              className="border-2 border-slate-700 rounded p-2"
+              className="border-1 border-gray-700 rounded p-2 shadow-md"
               value={usuario.usuario}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 atualizarEstado(e)
@@ -109,8 +106,7 @@ function Cadastro() {
               type="text"
               id="foto"
               name="foto"
-              placeholder="Foto"
-              className="border-2 border-slate-700 rounded p-2"
+              className="border-1 border-gray-700 rounded p-2 shadow-md"
               value={usuario.foto}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 atualizarEstado(e)
@@ -123,8 +119,7 @@ function Cadastro() {
               type="password"
               id="senha"
               name="senha"
-              placeholder="Senha"
-              className="border-2 border-slate-700 rounded p-2"
+              className="border-1 border-gray-700 rounded p-2 shadow-md"
               value={usuario.senha}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 atualizarEstado(e)
@@ -137,18 +132,16 @@ function Cadastro() {
               type="password"
               id="confirmarSenha"
               name="confirmarSenha"
-              placeholder="Confirmar Senha"
-              className="border-2 border-slate-700 rounded p-2"
+              className="border-1 border-gray-700 rounded p-2 shadow-md"
               value={confirmarSenha}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 handleConfirmarSenha(e)
               }
             />
           </div>
-          <div className="flex justify-around w-full gap-8">
+          <div className="flex justify-around w-full gap-8 pt-4">
             <button
-              className="rounded text-white bg-red-400 
-                  hover:bg-red-700 w-1/2 py-2"
+              className="rounded cursor-pointer shadow-md transition-all text-white bg-red-400 hover:bg-red-700 w-1/2 py-2"
               onClick={retornar}
               type="reset"
             >
@@ -156,9 +149,7 @@ function Cadastro() {
             </button>
             <button
               type="submit"
-              className="rounded text-white bg-indigo-400 
-                           hover:bg-indigo-900 w-1/2 py-2
-                           flex justify-center"
+              className="rounded cursor-pointer shadow-md transition-all text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center"
             >
               {isLoading ? (
                 <RotatingLines

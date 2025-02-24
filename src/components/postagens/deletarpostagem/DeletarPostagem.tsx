@@ -6,6 +6,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import Postagem from '../../../models/Postagem';
 import { buscar, deletar } from '../../../services/Service';
 import { RotatingLines } from 'react-loader-spinner';
+import { ToastAlerta } from '../../../utils/ToastAlerta';
 
 function DeletarPostagem() {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ function DeletarPostagem() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado');
+      ToastAlerta('Você precisa estar logado', 'info');
       navigate('/');
     }
   }, [token]);
@@ -55,12 +56,12 @@ function DeletarPostagem() {
         },
       });
 
-      alert('Postagem apagada com sucesso');
+      ToastAlerta('Postagem apagada com sucesso', 'sucesso');
     } catch (error: any) {
       if (error.toString().includes('403')) {
         handleLogout();
       } else {
-        alert('Erro ao deletar a postagem.');
+        ToastAlerta('Erro ao deletar a postagem.', 'suceso');
       }
     }
 
@@ -80,23 +81,23 @@ function DeletarPostagem() {
         Você tem certeza de que deseja apagar a postagem a seguir?
       </p>
 
-      <div className="border flex flex-col rounded-2xl overflow-hidden justify-between">
-        <header className="py-2 px-6 bg-indigo-600 text-white font-bold text-2xl">
+      <div className="border flex flex-col rounded-2xl overflow-hidden justify-between my-5">
+        <header className="py-2 px-6 bg-gray-600 text-white font-bold text-2xl">
           Postagem
         </header>
-        <div className="p-4">
+        <div className="p-4 gap-4 flex flex-col">
           <p className="text-xl h-full">{postagem.titulo}</p>
           <p>{postagem.texto}</p>
         </div>
         <div className="flex">
           <button
-            className="text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2"
+            className="text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2 transition-all cursor-pointer"
             onClick={retornar}
           >
             Não
           </button>
           <button
-            className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-600 flex items-center justify-center"
+            className="w-full text-slate-100 bg-indigo-400  cursor-pointer transition-all hover:bg-indigo-600 flex items-center justify-center"
             onClick={deletarPostagem}
           >
             {isLoading ? (

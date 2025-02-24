@@ -6,6 +6,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 import Tema from '../../../models/Tema';
 import { atualizar, buscar, cadastrar } from '../../../services/Service';
 import { RotatingLines } from 'react-loader-spinner';
+import { ToastAlerta } from '../../../utils/ToastAlerta';
 
 function FormTema() {
   const navigate = useNavigate();
@@ -26,13 +27,6 @@ function FormTema() {
       }
     }
   }
-
-  useEffect(() => {
-    if (token === '') {
-      alert('Você precisa estar logado!');
-      navigate('/');
-    }
-  }, [token]);
 
   useEffect(() => {
     if (id !== undefined) {
@@ -56,12 +50,12 @@ function FormTema() {
         await atualizar('/temas', tema, setTema, {
           headers: { Authorization: token },
         });
-        alert('O Tema foi Atualizado com sucesso!');
+        ToastAlerta('O Tema foi Atualizado com sucesso!', 'sucesso');
       } catch (error: any) {
         if (error.toString().includes('401')) {
           handleLogout();
         } else {
-          alert('Erro ao atualizar o tema!');
+          ToastAlerta('Erro ao atualizar o tema!', 'erro');
         }
       }
     } else {
@@ -69,12 +63,12 @@ function FormTema() {
         await cadastrar('/temas', tema, setTema, {
           headers: { Authorization: token },
         });
-        alert('O Tema foi Cadastrado com sucesso!');
+        ToastAlerta('O Tema foi Cadastrado com sucesso!', 'sucesso');
       } catch (error: any) {
         if (error.toString().includes('401')) {
           handleLogout();
         } else {
-          alert('Erro ao cadastrar o tema!');
+          ToastAlerta('Erro ao cadastrar o tema!', 'erro');
         }
       }
     }
@@ -85,7 +79,7 @@ function FormTema() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado!');
+      ToastAlerta('Você precisa estar logado!', 'info');
       navigate('/');
     }
   }, [token]);
@@ -107,13 +101,13 @@ function FormTema() {
             type="text"
             placeholder="Descreva aqui seu tema"
             name="descricao"
-            className="border-2 border-slate-700 rounded p-2"
+            className="border-2 border-gray-700 rounded p-2 shadow-md"
             value={tema.descricao}
             onChange={(e: ChangeEvent<HTMLInputElement>) => atualizarEstado(e)}
           />
         </div>
         <button
-          className="rounded text-slate-100 bg-indigo-400hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
+          className="rounded text-gray-100 bg-indigo-400hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
           type="submit"
         >
           {isLoading ? (
@@ -126,7 +120,7 @@ function FormTema() {
             />
           ) : (
             <button
-              className="rounded text-slate-100 bg-indigo-400 hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
+              className="rounded text-gray-100 bg-gray-500 hover:bg-gray-800 w-1/2 py-2 mx-auto flex justify-center hover:scale-101 shadow-lg transition-all cursor-pointer"
               type="submit"
             >
               {id === undefined ? 'Cadastrar' : 'Atualizar'}
